@@ -1,0 +1,2 @@
+class DividasController < ApplicationController
+end
