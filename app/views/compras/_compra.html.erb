@@ -1,7 +1,7 @@
 <div id="<%= dom_id compra %>">
   <p>
     <strong>Cliente:</strong>
-    <%= compra.cliente_id %>
+   <%= compra.cliente.nome if compra.cliente.present? %>
   </p>
 
   <p>
