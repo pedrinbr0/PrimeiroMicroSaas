@@ -1,0 +1,31 @@
+<h1>Gestão de Dívidas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>Valor</th>
+      <th>Data de Vencimento</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dividas.each do |divida| %>
+      <tr>
+        <td><%= divida.cliente.nome %></td>
+        <td><%= number_to_currency(divida.valor) %></td>
+        <td><%= divida.data_vencimento.strftime("%d/%m/%Y") %></td>
+        <td><%= divida.status.capitalize %></td>
+        <td>
+          <%= link_to 'Show', divida %> |
+          <%= link_to 'Edit', edit_divida_path(divida) %> |
+          <%= link_to 'Delete', divida, method: :delete, data: { confirm: 'Tem certeza?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Nova Dívida', new_divida_path %>

@@ -1,0 +1,10 @@
+<h1>Detalhes da Dívida</h1>
+
+<p><strong>Cliente:</strong> <%= @divida.cliente.nome %></p>
+<p><strong>Valor:</strong> R$ <%= @divida.valor %></p>
+<p><strong>Vencimento:</strong> <%= @divida.data_vencimento %></p>
+<p><strong>Status:</strong> <%= @divida.status %></p>
+
+<%= link_to "Voltar", dividas_path %>
+<%= link_to "Editar", edit_divida_path(@divida) %>
+<%= button_to "Deletar", @divida, method: :delete, data: { confirm: "Tem certeza?" } %>
