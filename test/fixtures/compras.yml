@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cliente: one
+  data: 2025-03-31
+  descricao: MyText
+  valor: 9.99
+
+two:
+  cliente: two
+  data: 2025-03-31
+  descricao: MyText
+  valor: 9.99
