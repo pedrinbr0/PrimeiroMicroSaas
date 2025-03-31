@@ -12,8 +12,8 @@
   <% end %>
 
   <div>
-    <%= form.label :cliente_id, style: "display: block" %>
-    <%= form.text_field :cliente_id %>
+  <%= form.label :cliente_id, "Cliente", style: "display: block" %>
+  <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, prompt: "Selecione um Cliente" %>
   </div>
 
   <div>
