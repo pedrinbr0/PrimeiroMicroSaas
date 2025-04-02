@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :encomendas
   resources :compras
   resources :clientes
   resources :dividas

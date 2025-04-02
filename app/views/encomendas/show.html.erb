@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @encomenda %>
+
+<div>
+  <%= link_to "Edit this encomenda", edit_encomenda_path(@encomenda) %> |
+  <%= link_to "Back to encomendas", encomendas_path %>
+
+  <%= button_to "Destroy this encomenda", @encomenda, method: :delete %>
+</div>
