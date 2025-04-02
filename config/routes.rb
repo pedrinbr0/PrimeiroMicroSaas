@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'relatorios/index'
+  get 'relatorios', to: 'relatorios#index'
   resources :encomendas
   resources :compras
   resources :clientes
