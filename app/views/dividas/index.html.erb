@@ -1,16 +1,15 @@
 <h1>Gestão de Dívidas</h1>
 
-<h2>⚠️ Notificações</h2>
-<ul>
-  <% @dividas.each do |divida| %>
-    <% if divida.status_pagamento != "Pendente" && divida.status_pagamento != "Pago" %>
-      <li style="color: red">
-        Cliente <strong><%= divida.cliente.nome %></strong> tem uma dívida de R$ <%= divida.valor %>
-        (<%= divida.status_pagamento %> - Vencimento: <%= divida.data_vencimento.strftime("%d/%m/%Y") %>)
-      </li>
-    <% end %>
-  <% end %>
-</ul>
+<!-- Seção de Notificações -->
+<% if @dividas.any? { |d| d.status == 'pendente' && d.data_vencimento < Date.today } %>
+  <div style="color: red; font-weight: bold;">
+    <p>Atenção! Há dívidas vencidas.</p>
+  </div>
+<% elsif @dividas.any? { |d| d.status == 'pendente' && d.data_vencimento <= Date.today + 3 } %>
+  <div style="color: orange; font-weight: bold;">
+    <p>Alerta! Existem dívidas próximas do vencimento.</p>
+  </div>
+<% end %>
 
 <table>
   <thead>
@@ -29,7 +28,7 @@
         <td><%= divida.cliente.nome %></td>
         <td><%= number_to_currency(divida.valor) %></td>
         <td><%= divida.data_vencimento.strftime("%d/%m/%Y") %></td>
-        <td><%= divida.status_pagamento.capitalize %></td>
+        <td><%= divida.status.capitalize %></td>
         <td>
           <%= link_to 'Show', divida %> |
           <%= link_to 'Edit', edit_divida_path(divida) %> |
@@ -41,3 +40,22 @@
 </table>
 
 <%= link_to 'Nova Dívida', new_divida_path %>
+
+<!-- Seção de Relatórios -->
+<h2>Relatórios</h2>
+<form method="get" action="<%= relatorios_path %>">
+  <label>Período:</label>
+  <select name="periodo">
+    <option value="7">Últimos 7 dias</option>
+    <option value="30">Últimos 30 dias</option>
+    <option value="90">Últimos 3 meses</option>
+    <option value="custom">Personalizado</option>
+  </select>
+  <br>
+  <label>Data Início:</label>
+  <input type="date" name="data_inicio">
+  <label>Data Fim:</label>
+  <input type="date" name="data_fim">
+  <br>
+  <input type="submit" value="Gerar Relatório">
+</form>
