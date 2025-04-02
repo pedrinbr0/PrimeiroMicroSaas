@@ -1,2 +1,26 @@
-<h1>Relatorios#index</h1>
-<p>Find me in app/views/relatorios/index.html.erb</p>
+<h1>Relatório de Dívidas</h1>
+
+<p>Período: <%= @data_inicio.strftime("%d/%m/%Y") %> até <%= @data_fim.strftime("%d/%m/%Y") %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>Valor</th>
+      <th>Data de Vencimento</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @dividas.each do |divida| %>
+      <tr>
+        <td><%= divida.cliente.nome %></td>
+        <td><%= number_to_currency(divida.valor) %></td>
+        <td><%= divida.data_vencimento.strftime("%d/%m/%Y") %></td>
+        <td><%= divida.status.capitalize %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Voltar", dividas_path %>
