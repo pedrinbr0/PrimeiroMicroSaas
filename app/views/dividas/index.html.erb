@@ -1,5 +1,17 @@
 <h1>Gestão de Dívidas</h1>
 
+<h2>⚠️ Notificações</h2>
+<ul>
+  <% @dividas.each do |divida| %>
+    <% if divida.status_pagamento != "Pendente" && divida.status_pagamento != "Pago" %>
+      <li style="color: red">
+        Cliente <strong><%= divida.cliente.nome %></strong> tem uma dívida de R$ <%= divida.valor %>
+        (<%= divida.status_pagamento %> - Vencimento: <%= divida.data_vencimento.strftime("%d/%m/%Y") %>)
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+
 <table>
   <thead>
     <tr>
@@ -17,7 +29,7 @@
         <td><%= divida.cliente.nome %></td>
         <td><%= number_to_currency(divida.valor) %></td>
         <td><%= divida.data_vencimento.strftime("%d/%m/%Y") %></td>
-        <td><%= divida.status.capitalize %></td>
+        <td><%= divida.status_pagamento.capitalize %></td>
         <td>
           <%= link_to 'Show', divida %> |
           <%= link_to 'Edit', edit_divida_path(divida) %> |
