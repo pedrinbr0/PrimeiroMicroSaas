@@ -13,7 +13,7 @@
 
   <div>
     <%= form.label :cliente_id, style: "display: block" %>
-    <%= form.text_field :cliente_id %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, prompt: "Selecione um cliente" %>
   </div>
 
   <div>
@@ -28,7 +28,7 @@
 
   <div>
     <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
+    <%= form.select :status, ["Aguardando", "Enviado", "Entregue"], prompt: "Selecione um status" %>
   </div>
 
   <div>
