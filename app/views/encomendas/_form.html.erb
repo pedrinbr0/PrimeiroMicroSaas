@@ -1,0 +1,37 @@
+<%= form_with(model: encomenda) do |form| %>
+  <% if encomenda.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(encomenda.errors.count, "error") %> prohibited this encomenda from being saved:</h2>
+
+      <ul>
+        <% encomenda.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :cliente_id, style: "display: block" %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, prompt: "Selecione um cliente" %>
+  </div>
+
+  <div>
+    <%= form.label :descricao, style: "display: block" %>
+    <%= form.text_area :descricao %>
+  </div>
+
+  <div>
+    <%= form.label :data_prevista, style: "display: block" %>
+    <%= form.date_field :data_prevista %>
+  </div>
+
+  <div>
+    <%= form.label :status, style: "display: block" %>
+    <%= form.select :status, ["Aguardando", "Enviado", "Entregue"], prompt: "Selecione um status" %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
