@@ -1,14 +1,23 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-success text-center">
+    <%= notice %>
+  </div>
+<% end %>
 
-<h1>Compras</h1>
-
-<div id="compras">
-  <% @compras.each do |compra| %>
-    <%= render compra %>
-    <p>
-      <%= link_to "Show this compra", compra %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="text-primary">Compras</h1>
+  <%= link_to "Nova Compra", new_compra_path, class: "btn btn-success" %>
 </div>
 
-<%= link_to "New compra", new_compra_path %>
+<div class="row">
+  <% @compras.each do |compra| %>
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <%= render compra %>
+          <%= link_to "Ver detalhes", compra, class: "btn btn-outline-primary btn-sm mt-3" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

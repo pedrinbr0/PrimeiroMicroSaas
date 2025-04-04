@@ -1,9 +1,11 @@
-<h1>New compra</h1>
+<div class="container mt-4">
+  <h1 class="mb-4 text-success">Nova Compra</h1>
 
-<%= render "form", compra: @compra %>
+  <div class="card p-4 shadow-sm">
+    <%= render "form", compra: @compra %>
+  </div>
 
-<br>
-
-<div>
-  <%= link_to "Back to compras", compras_path %>
+  <div class="mt-3">
+    <%= link_to "Voltar", compras_path, class: "btn btn-secondary" %>
+  </div>
 </div>
