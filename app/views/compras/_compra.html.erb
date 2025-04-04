@@ -1,22 +1,23 @@
 <div id="<%= dom_id compra %>">
-  <p>
-    <strong>Cliente:</strong>
-   <%= compra.cliente.nome if compra.cliente.present? %>
-  </p>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <strong>Cliente:</strong>
+      <%= compra.cliente.nome if compra.cliente.present? %>
+    </li>
 
-  <p>
-    <strong>Data:</strong>
-    <%= compra.data %>
-  </p>
+    <li class="list-group-item">
+      <strong>Data:</strong>
+      <%= l(compra.data, format: :long) %>
+    </li>
 
-  <p>
-    <strong>Descricao:</strong>
-    <%= compra.descricao %>
-  </p>
+    <li class="list-group-item">
+      <strong>Descrição:</strong>
+      <%= compra.descricao %>
+    </li>
 
-  <p>
-    <strong>Valor:</strong>
-    <%= compra.valor %>
-  </p>
-
+    <li class="list-group-item">
+      <strong>Valor:</strong>
+      R$ <%= number_to_currency(compra.valor, unit: "", separator: ",", delimiter: ".") %>
+    </li>
+  </ul>
 </div>

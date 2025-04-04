@@ -1,61 +1,74 @@
-<h1>Gestão de Dívidas</h1>
+<div class="container mt-4">
+  <h1 class="text-center text-primary mb-4">Gestão de Dívidas</h1>
 
-<!-- Seção de Notificações -->
-<% if @dividas.any? { |d| d.status == 'pendente' && d.data_vencimento < Date.today } %>
-  <div style="color: red; font-weight: bold;">
-    <p>Atenção! Há dívidas vencidas.</p>
+  <!-- Seção de Notificações -->
+  <% if @dividas.any? { |d| d.status == 'pendente' && d.data_vencimento < Date.today } %>
+    <div class="alert alert-danger text-center fw-bold">
+      Atenção! Há dívidas vencidas.
+    </div>
+  <% elsif @dividas.any? { |d| d.status == 'pendente' && d.data_vencimento <= Date.today + 3 } %>
+    <div class="alert alert-warning text-center fw-bold">
+      Alerta! Existem dívidas próximas do vencimento.
+    </div>
+  <% end %>
+
+  <!-- Tabela de Dívidas -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Cliente</th>
+          <th>Valor</th>
+          <th>Data de Vencimento</th>
+          <th>Status</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @dividas.each do |divida| %>
+          <tr>
+            <td><%= divida.cliente.nome %></td>
+            <td><%= number_to_currency(divida.valor) %></td>
+            <td><%= divida.data_vencimento.strftime("%d/%m/%Y") %></td>
+            <td>
+              <% status_class = divida.status == 'paga' ? 'success' : 'warning' %>
+              <span class="badge bg-<%= status_class %>"><%= divida.status.capitalize %></span>
+            </td>
+            <td class="text-center">
+              <%= link_to 'Visualizar', divida, class: "btn btn-outline-primary btn-sm me-1" %>
+              <%= link_to 'Editar', edit_divida_path(divida), class: "btn btn-outline-warning btn-sm me-1" %>
+              <%= link_to 'Excluir', divida, method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-outline-danger btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-<% elsif @dividas.any? { |d| d.status == 'pendente' && d.data_vencimento <= Date.today + 3 } %>
-  <div style="color: orange; font-weight: bold;">
-    <p>Alerta! Existem dívidas próximas do vencimento.</p>
+
+  <div class="text-end mb-5">
+    <%= link_to 'Nova Dívida', new_divida_path, class: "btn btn-success" %>
   </div>
-<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Cliente</th>
-      <th>Valor</th>
-      <th>Data de Vencimento</th>
-      <th>Status</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
+  <!-- Seção de Relatórios -->
+  <h2 class="text-secondary mb-3">Relatórios</h2>
+  <%= form_with url: relatorios_path, method: :get, class: "row g-3 align-items-end" do %>
+    <div class="col-md-3">
+      <%= label_tag :periodo, "Período:", class: "form-label" %>
+      <%= select_tag :periodo, options_for_select([["Últimos 7 dias", "7"], ["Últimos 30 dias", "30"], ["Últimos 3 meses", "90"], ["Personalizado", "custom"]]), class: "form-select" %>
+    </div>
 
-  <tbody>
-    <% @dividas.each do |divida| %>
-      <tr>
-        <td><%= divida.cliente.nome %></td>
-        <td><%= number_to_currency(divida.valor) %></td>
-        <td><%= divida.data_vencimento.strftime("%d/%m/%Y") %></td>
-        <td><%= divida.status.capitalize %></td>
-        <td>
-          <%= link_to 'Show', divida %> |
-          <%= link_to 'Edit', edit_divida_path(divida) %> |
-          <%= link_to 'Delete', divida, method: :delete, data: { confirm: 'Tem certeza?' } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div class="col-md-3">
+      <%= label_tag :data_inicio, "Data Início:", class: "form-label" %>
+      <%= date_field_tag :data_inicio, nil, class: "form-control" %>
+    </div>
 
-<%= link_to 'Nova Dívida', new_divida_path %>
+    <div class="col-md-3">
+      <%= label_tag :data_fim, "Data Fim:", class: "form-label" %>
+      <%= date_field_tag :data_fim, nil, class: "form-control" %>
+    </div>
 
-<!-- Seção de Relatórios -->
-<h2>Relatórios</h2>
-<form method="get" action="<%= relatorios_path %>">
-  <label>Período:</label>
-  <select name="periodo">
-    <option value="7">Últimos 7 dias</option>
-    <option value="30">Últimos 30 dias</option>
-    <option value="90">Últimos 3 meses</option>
-    <option value="custom">Personalizado</option>
-  </select>
-  <br>
-  <label>Data Início:</label>
-  <input type="date" name="data_inicio">
-  <label>Data Fim:</label>
-  <input type="date" name="data_fim">
-  <br>
-  <input type="submit" value="Gerar Relatório">
-</form>
+    <div class="col-md-3">
+      <%= submit_tag "Gerar Relatório", class: "btn btn-primary w-100" %>
+    </div>
+  <% end %>
+</div>
