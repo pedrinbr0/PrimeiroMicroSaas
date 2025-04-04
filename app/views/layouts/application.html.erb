@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>MicroSaas</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,10 +10,27 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="#">MicroSaas</a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <% flash.each do |type, message| %>
+        <div class="alert alert-<%= type == "notice" ? "success" : "danger" %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+
+    <footer class="text-center mt-5 mb-3 text-muted">
+      <small>&copy; <%= Time.current.year %> MicroSaas</small>
+    </footer>
   </body>
 </html>
-
-<div class="container">
-  <h1 class="text-center text-primary">Bootstrap Funcionando! 🎉</h1>
-</div>
