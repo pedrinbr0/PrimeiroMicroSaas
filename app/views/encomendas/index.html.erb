@@ -1,14 +1,28 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Encomendas</h1>
-
-<div id="encomendas">
-  <% @encomendas.each do |encomenda| %>
-    <%= render encomenda %>
-    <p>
-      <%= link_to "Show this encomenda", encomenda %>
-    </p>
+<div class="container mt-4">
+  <% if notice %>
+    <div class="alert alert-success">
+      <%= notice %>
+    </div>
   <% end %>
-</div>
 
-<%= link_to "New encomenda", new_encomenda_path %>
+  <h1 class="text-center text-primary mb-4">Encomendas</h1>
+
+  <div class="row">
+    <% @encomendas.each do |encomenda| %>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <%= render encomenda %>
+            <div class="mt-3 d-flex justify-content-between">
+              <%= link_to "Visualizar", encomenda, class: "btn btn-outline-primary btn-sm" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="text-end mt-3">
+    <%= link_to "Nova Encomenda", new_encomenda_path, class: "btn btn-success" %>
+  </div>
+</div>
