@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MicroSaas</title>
+    <title>Sistema de Gestão</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
       <div class="container">
-        <a class="navbar-brand" href="#">MicroSaas</a>
+        <%= link_to "Sistema", root_path, class: "navbar-brand" %>
+
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><%= link_to "Clientes", clientes_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to "Compras", compras_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to "Dívidas", dividas_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to "Encomendas", encomendas_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to "Relatórios", relatorios_path, class: "nav-link" %></li>
+          </ul>
+        </div>
       </div>
     </nav>
 
     <div class="container">
-      <% flash.each do |type, message| %>
-        <div class="alert alert-<%= type == "notice" ? "success" : "danger" %> alert-dismissible fade show" role="alert">
-          <%= message %>
+      <% flash.each do |key, value| %>
+        <% bootstrap_class = { notice: "alert-success", alert: "alert-danger", error: "alert-danger" }[key.to_sym] || "alert-info" %>
+        <div class="alert <%= bootstrap_class %> alert-dismissible fade show" role="alert">
+          <%= value %>
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       <% end %>
-    </div>
 
-    <div class="container">
       <%= yield %>
     </div>
-
-    <footer class="text-center mt-5 mb-3 text-muted">
-      <small>&copy; <%= Time.current.year %> MicroSaas</small>
-    </footer>
   </body>
 </html>
