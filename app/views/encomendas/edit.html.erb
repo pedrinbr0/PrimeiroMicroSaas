@@ -1,10 +1,10 @@
-<h1>Editing encomenda</h1>
+<div class="container mt-4">
+  <h1 class="mb-4">Editar Encomenda</h1>
 
-<%= render "form", encomenda: @encomenda %>
+  <%= render "form", encomenda: @encomenda %>
 
-<br>
-
-<div>
-  <%= link_to "Show this encomenda", @encomenda %> |
-  <%= link_to "Back to encomendas", encomendas_path %>
+  <div class="mt-3">
+    <%= link_to "Visualizar Encomenda", @encomenda, class: "btn btn-outline-primary" %>
+    <%= link_to "Voltar para encomendas", encomendas_path, class: "btn btn-secondary" %>
+  </div>
 </div>
