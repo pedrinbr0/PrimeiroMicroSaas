@@ -4,6 +4,12 @@ class ClientesController < ApplicationController
   # GET /clientes or /clientes.json
   def index
     @clientes = Cliente.all
+
+    if params[:search].present?
+      @clientes = @clientes.where("nome ILIKE ?", "%#{params[:search]}%")
+    end
+
+    @clientes = @clientes.order(:nome).page(params[:page]).per(10)
   end
 
   # GET /clientes/1 or /clientes/1.json
