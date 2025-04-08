@@ -1,10 +1,49 @@
-<h1>Painel Principal</h1>
+<h1>Painel de Controle</h1>
 
-<p>Bem-vindo ao sistema!</p>
+<div class="row mb-4">
+  <div class="col-md-6">
+    <div class="card text-white bg-danger mb-3">
+      <div class="card-header">Dívidas Vencidas</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= @dividas_vencidas.count %> dívidas vencidas</h5>
+        <%= link_to "Ver todas", dividas_path, class: "btn btn-light" %>
+      </div>
+    </div>
+  </div>
 
-<ul>
-  <li>Dívidas vencidas: (exibir número)</li>
-  <li>Dívidas próximas do vencimento: (exibir número)</li>
-  <li>Encomendas atrasadas: (exibir número)</li>
-  <li>Total de dívidas por cliente: (resumo em breve)</li>
-</ul>
+  <div class="col-md-6">
+    <div class="card text-white bg-warning mb-3">
+      <div class="card-header">Dívidas Próximas do Vencimento</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= @dividas_proximas.count %> próximas do vencimento</h5>
+        <%= link_to "Ver todas", dividas_path, class: "btn btn-light" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-md-6">
+    <div class="card text-white bg-info mb-3">
+      <div class="card-header">Encomendas em Atraso</div>
+      <div class="card-body">
+        <h5 class="card-title"><%= @encomendas_atrasadas.count %> em atraso</h5>
+        <%= link_to "Ver todas", encomendas_path, class: "btn btn-light" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card text-white bg-success mb-3">
+      <div class="card-header">Últimas Movimentações</div>
+      <div class="card-body">
+        <ul>
+          <% @ultimas_compras.each do |compra| %>
+            <li><strong><%= compra.cliente.nome %></strong> fez uma compra em <%= compra.data.strftime("%d/%m/%Y") %></li>
+          <% end %>
+        </ul>
+        <%= link_to "Ver compras", compras_path, class: "btn btn-light mt-2" %>
+      </div>
+    </div>
+  </div>
+</div>
