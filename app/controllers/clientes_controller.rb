@@ -1,15 +1,12 @@
 class ClientesController < ApplicationController
   before_action :set_cliente, only: %i[ show edit update destroy ]
 
-  # GET /clientes or /clientes.json
   def index
-    @clientes = Cliente.all
-
-    if params[:search].present?
-      @clientes = @clientes.where("nome ILIKE ?", "%#{params[:search]}%")
-    end
-
-    @clientes = @clientes.order(:nome).page(params[:page]).per(10)
+    @clientes = Cliente
+                  .busca_nome(params[:search])
+                  .order(:nome)
+                  .page(params[:page])
+                  .per(10)
   end
 
   # GET /clientes/1 or /clientes/1.json
