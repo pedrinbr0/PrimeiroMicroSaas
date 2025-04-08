@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'dashboard/index'
   get 'relatorios', to: 'relatorios#index'
   resources :encomendas
   resources :compras
@@ -12,6 +13,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  root "clientes#index"
+  root "dashboard#index"
 
 end
