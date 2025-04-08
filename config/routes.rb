@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'dashboard/index'
   get 'relatorios', to: 'relatorios#index'
   resources :encomendas
   resources :compras
