@@ -13,4 +13,9 @@ class Divida < ApplicationRecord
     end
   end
 
+  scope :busca_por_cliente, ->(termo) {
+  joins(:cliente).where("LOWER(clientes.nome) LIKE ?", "%#{termo.downcase}%") if termo.present?
+}
+
+
 end
