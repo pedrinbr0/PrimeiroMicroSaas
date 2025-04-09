@@ -2,7 +2,12 @@ class DividasController < ApplicationController
   before_action :set_divida, only: %i[show edit update destroy]
 
   def index
-    @dividas = Divida.all
+    @dividas = Divida
+                 .includes(:cliente)
+                 .busca_por_cliente(params[:search])
+                 .order(data_vencimento: :asc)
+                 .page(params[:page])
+                 .per(10)
   end
 
   def show
