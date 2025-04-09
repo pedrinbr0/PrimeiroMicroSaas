@@ -1,6 +1,14 @@
 <div class="container mt-4">
   <h1 class="text-center text-primary mb-4">Gestão de Dívidas</h1>
 
+  <!-- Campo de busca -->
+  <%= form_with url: dividas_path, method: :get, local: true, class: "mb-4" do |form| %>
+    <div class="input-group">
+      <%= form.text_field :search, value: params[:search], class: "form-control", placeholder: "Buscar por cliente..." %>
+      <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+    </div>
+  <% end %>
+
   <!-- Seção de Notificações -->
   <% if @dividas.any? { |d| d.status == 'pendente' && d.data_vencimento < Date.today } %>
     <div class="alert alert-danger text-center fw-bold">
@@ -71,4 +79,9 @@
       <%= submit_tag "Gerar Relatório", class: "btn btn-primary w-100" %>
     </div>
   <% end %>
+
+  <!-- Paginação -->
+  <div class="mt-4">
+    <%= paginate @dividas, theme: 'bootstrap-4' %>
+  </div>
 </div>
