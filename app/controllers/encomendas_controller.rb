@@ -1,9 +1,14 @@
 class EncomendasController < ApplicationController
   before_action :set_encomenda, only: %i[ show edit update destroy ]
 
-  # GET /encomendas or /encomendas.json
   def index
-    @encomendas = Encomenda.all
+    @encomendas = Encomenda.includes(:cliente)
+
+    if params[:search].present?
+      @encomendas = @encomendas.com_nome_cliente(params[:search])
+    end
+
+    @encomendas = @encomendas.order(created_at: :desc).page(params[:page]).per(9)
   end
 
   # GET /encomendas/1 or /encomendas/1.json
