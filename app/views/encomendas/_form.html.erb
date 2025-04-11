@@ -1,7 +1,7 @@
-<%= form_with(model: encomenda, class: "mt-3") do |form| %>
+<%= form_with(model: encomenda, local: true) do |form| %>
   <% if encomenda.errors.any? %>
-    <div class="alert alert-danger">
-      <h4><%= pluralize(encomenda.errors.count, "erro") %> impediram a encomenda de ser salva:</h4>
+    <div id="error_explanation">
+      <h2><%= pluralize(encomenda.errors.count, "erro") %> proibiu essa encomenda de ser salva:</h2>
       <ul>
         <% encomenda.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -11,24 +11,30 @@
   <% end %>
 
   <div class="mb-3">
-    <%= form.label :cliente_id, class: "form-label" %>
-    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, { prompt: "Selecione um cliente" }, class: "form-select" %>
+    <%= form.label :cliente_id, "Cliente" %>
+    <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, prompt: "Selecione um cliente", class: "form-select" %>
+  </div>
+
+  <hr>
+
+  <h5>Produtos</h5>
+  <div id="produtos-container">
+    <%= form.fields_for :encomenda_produtos do |ep_form| %>
+      <%= render 'produto_fields', f: ep_form %>
+    <% end %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :descricao, class: "form-label" %>
-    <%= form.text_area :descricao, class: "form-control" %>
+    <button type="button" class="btn btn-outline-primary" id="add-produto">Adicionar Produto</button>
   </div>
 
+  <hr>
   <div class="mb-3">
-    <%= form.label :data_prevista, class: "form-label" %>
-    <%= form.date_field :data_prevista, class: "form-control" %>
+    <label><strong>Valor Total:</strong></label>
+    <span id="valor-total">R$ 0,00</span>
   </div>
 
-  <div class="mb-3">
-    <%= form.label :status, class: "form-label" %>
-    <%= form.select :status, ["Aguardando", "Enviado", "Entregue"], { prompt: "Selecione um status" }, class: "form-select" %>
-  </div>
-
-  <%= form.submit "Salvar", class: "btn btn-success" %>
+  <%= form.submit class: "btn btn-success" %>
 <% end %>
+
+<%= javascript_include_tag "encomendas" %>
