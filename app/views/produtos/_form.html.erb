@@ -1,32 +1,31 @@
-<%= form_with(model: produto) do |form| %>
+<%= form_with(model: produto, local: true, class: "mt-4") do |form| %>
   <% if produto.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(produto.errors.count, "error") %> prohibited this produto from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4><%= pluralize(produto.errors.count, "erro") %> impediram este produto de ser salvo:</h4>
       <ul>
-        <% produto.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% produto.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :nome, style: "display: block" %>
-    <%= form.text_field :nome %>
+  <div class="mb-3">
+    <%= form.label :nome, "Nome do Produto", class: "form-label" %>
+    <%= form.text_field :nome, class: "form-control", placeholder: "Ex: Panela Antiaderente" %>
   </div>
 
-  <div>
-    <%= form.label :preco, style: "display: block" %>
-    <%= form.text_field :preco %>
+  <div class="mb-3">
+    <%= form.label :preco, "Preço (R$)", class: "form-label" %>
+    <%= form.number_field :preco, step: 0.01, class: "form-control", placeholder: "Ex: 120.50" %>
   </div>
 
-  <div>
-    <%= form.label :codigo_barra, style: "display: block" %>
-    <%= form.text_field :codigo_barra %>
+  <div class="mb-3">
+    <%= form.label :codigo_barra, "Código de Barras", class: "form-label" %>
+    <%= form.text_field :codigo_barra, class: "form-control", placeholder: "Escaneie ou digite o código" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="text-end">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
