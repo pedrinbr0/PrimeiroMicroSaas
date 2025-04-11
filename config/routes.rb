@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :produtos
+  resources :produtos do
+    get :buscar_por_codigo, on: :collection
+  end
   get 'dashboard/index'
   get 'relatorios', to: 'relatorios#index'
   resources :encomendas
