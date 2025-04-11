@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   resources :produtos do
     get :buscar_por_codigo, on: :collection
   end
+
   get 'dashboard/index'
   get 'relatorios', to: 'relatorios#index'
+  get 'produtos/buscar_por_codigo', to: 'produtos#buscar_por_codigo'
+
   resources :encomendas
   resources :compras
   resources :clientes
