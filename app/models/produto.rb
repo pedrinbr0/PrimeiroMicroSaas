@@ -1,5 +1,5 @@
 class Produto < ApplicationRecord
-  has_many :encomenda_produtos
+  has_many :encomenda_produtos, dependent: :destroy
   has_many :encomendas, through: :encomenda_produtos
 
   validates :nome, presence: true
