@@ -1,4 +1,7 @@
 class Encomenda < ApplicationRecord
+  has_many :encomenda_produtos
+  has_many :produtos, through: :encomenda_produtos
+
   belongs_to :cliente
 
   validates :descricao, presence: true
