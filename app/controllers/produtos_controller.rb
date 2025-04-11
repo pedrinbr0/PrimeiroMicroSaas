@@ -57,6 +57,17 @@ class ProdutosController < ApplicationController
     end
   end
 
+  # GET /produtos/buscar_por_codigo?codigo_barra=123456
+  def buscar_por_codigo
+    produto = Produto.find_by(codigo_barra: params[:codigo_barra])
+
+    if produto
+      render json: { id: produto.id, nome: produto.nome, preco: produto.preco }
+    else
+      render json: { erro: "Produto não encontrado" }, status: :not_found
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_produto
