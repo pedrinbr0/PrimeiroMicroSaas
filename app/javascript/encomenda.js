@@ -1,0 +1,67 @@
+document.addEventListener("DOMContentLoaded", () => {
+    function atualizarTotal() {
+      let total = 0;
+      document.querySelectorAll(".produto-line").forEach((linha) => {
+        const precoTexto = linha.querySelector(".preco-unitario").innerText.replace("R$", "").replace(",", ".").trim();
+        const quantidade = parseInt(linha.querySelector(".quantidade").value || "1");
+        const preco = parseFloat(precoTexto) || 0;
+        total += preco * quantidade;
+      });
+      document.getElementById("valor-total").innerText = `R$ ${total.toFixed(2).replace(".", ",")}`;
+    }
+  
+    function buscarProdutoPorCodigo(input) {
+      const codigo = input.value.trim();
+      if (codigo.length === 0) return;
+  
+      fetch(`/produtos/buscar_por_codigo?codigo_barra=${codigo}`)
+        .then(res => res.json())
+        .then(data => {
+          const linha = input.closest(".produto-line");
+          linha.querySelector(".preco-unitario").innerText = `R$ ${data.preco.toFixed(2).replace(".", ",")}`;
+  
+          // Criar ou atualizar o hidden_field de produto_id
+          let hidden = linha.querySelector("input[name*='[produto_id]']");
+          if (!hidden) {
+            hidden = document.createElement("input");
+            hidden.type = "hidden";
+            hidden.name = input.name.replace("codigo_barra[]", "encomenda_produtos_attributes[][produto_id]");
+            linha.appendChild(hidden);
+          }
+          hidden.value = data.id;
+  
+          atualizarTotal();
+        }).catch(() => {
+          alert("Produto não encontrado para o código informado.");
+        });
+    }
+  
+    document.getElementById("add-produto").addEventListener("click", () => {
+      fetch("/encomendas/novo_produto_campo")
+        .then(res => res.text())
+        .then(html => {
+          const container = document.getElementById("produtos-container");
+          container.insertAdjacentHTML("beforeend", html);
+        });
+    });
+  
+    document.addEventListener("input", (event) => {
+      if (event.target.classList.contains("codigo-barra")) {
+        buscarProdutoPorCodigo(event.target);
+      }
+  
+      if (event.target.classList.contains("quantidade")) {
+        atualizarTotal();
+      }
+    });
+  
+    document.addEventListener("click", (event) => {
+      if (event.target.classList.contains("remove-produto")) {
+        event.target.closest(".produto-line").remove();
+        atualizarTotal();
+      }
+    });
+  
+    atualizarTotal();
+  });
+  
