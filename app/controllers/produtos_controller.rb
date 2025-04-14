@@ -59,12 +59,13 @@ class ProdutosController < ApplicationController
 
   # GET /produtos/buscar_por_codigo?codigo_barra=123456
   def buscar_por_codigo
-    produto = Produto.find_by(codigo_barra: params[:codigo_barra])
+    codigo = params[:codigo_barra].to_s.strip.gsub("-", "")
+    produto = Produto.where("REPLACE(codigo_barra, '-', '') = ?", codigo).first
 
     if produto
-      render json: { id: produto.id, nome: produto.nome, preco: produto.preco }
+      render json: produto
     else
-      render json: { erro: "Produto não encontrado" }, status: :not_found
+      head :not_found
     end
   end
 
