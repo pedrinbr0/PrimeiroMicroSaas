@@ -16,7 +16,7 @@ class EncomendasController < ApplicationController
   end
 
   def novo_produto_campo
-    render partial: "produto_fields", locals: { f: nil }
+    render partial: "produto_fields_raw"
   end
 
   # GET /encomendas/new
