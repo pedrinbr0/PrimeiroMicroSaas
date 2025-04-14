@@ -6,4 +6,49 @@
   <div class="mt-3">
     <%= link_to "Voltar para encomendas", encomendas_path, class: "btn btn-secondary" %>
   </div>
+
+  <div class="mb-3">
+   <label for="codigoBarra" class="form-label">Código de Barras</label>
+   <input type="text" id="codigoBarra" class="form-control" placeholder="Escaneie ou digite o código">
+ </div>
+
+ <div id="produto-info" class="mt-3"></div>
+
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("codigoBarra");
+
+    input.addEventListener("change", () => {
+      const codigo = input.value;
+
+      if (!codigo) return;
+
+      fetch(`/produtos/buscar_por_codigo?codigo=${codigo}`)
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById("produto-info");
+
+          if (data.error) {
+            container.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+          } else {
+            container.innerHTML = `
+              <div class="alert alert-success">
+                <strong>Produto:</strong> ${data.nome}<br>
+                <strong>Preço:</strong> R$ ${data.preco}
+              </div>
+            `;
+
+            // Aqui você pode preencher automaticamente os campos ocultos
+            // ou criar inputs para salvar na encomenda
+          }
+
+          input.value = ""; // Limpa o campo para novo scan
+        })
+        .catch(() => {
+          alert("Erro ao buscar produto.");
+        });
+    });
+  });
+</script>
