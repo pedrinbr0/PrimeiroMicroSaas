@@ -1,7 +1,7 @@
 <div class="row mb-2 produto-line">
   <div class="col-md-4">
     <%= f.label :codigo_barra, "Código de Barras" %>
-    <%= text_field_tag "codigo_barra[]", f.object.produto&.codigo_barra, class: "form-control codigo-barra" %>
+    <%= text_field_tag "codigo_barra[]", (f.object&.produto&.codigo_barra || ""), class: "form-control codigo-barra" %>
   </div>
   <div class="col-md-4">
     <%= f.label :quantidade %>

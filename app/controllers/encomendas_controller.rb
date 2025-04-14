@@ -18,6 +18,7 @@ class EncomendasController < ApplicationController
   # GET /encomendas/new
   def new
     @encomenda = Encomenda.new
+    @encomenda.itens.build
   end
 
   # GET /encomendas/1/edit
