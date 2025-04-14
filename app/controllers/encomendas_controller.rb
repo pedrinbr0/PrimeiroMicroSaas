@@ -18,6 +18,7 @@ class EncomendasController < ApplicationController
   # GET /encomendas/new
   def new
     @encomenda = Encomenda.new
+    @encomenda.encomenda_produtos.build
   end
 
   # GET /encomendas/1/edit
@@ -70,6 +71,12 @@ class EncomendasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def encomenda_params
-      params.require(:encomenda).permit(:cliente_id, :descricao, :data_prevista, :status)
+      params.require(:encomenda).permit(
+        :cliente_id,
+        :descricao,
+        :data_prevista,
+        :status,
+        itens_attributes: [:id, :produto_id, :quantidade, :_destroy]
+      )
     end
 end
