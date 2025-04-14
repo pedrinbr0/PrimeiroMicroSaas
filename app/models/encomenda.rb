@@ -14,4 +14,5 @@ class Encomenda < ApplicationRecord
     joins(:cliente).where("LOWER(clientes.nome) LIKE ?", "%#{termo.downcase}%")
   }
 
+  accepts_nested_attributes_for :encomenda_produtos, allow_destroy: true
 end
