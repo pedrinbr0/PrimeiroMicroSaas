@@ -15,6 +15,11 @@ class EncomendasController < ApplicationController
   def show
   end
 
+  def novo_produto_campo
+    @encomenda_produto = EncomendaProduto.new
+    render partial: 'produto_fields', locals: { f: ActionView::Helpers::FormBuilder.new(:encomenda_produtos, @encomenda_produto, self, {}) }
+  end
+
   # GET /encomendas/new
   def new
     @encomenda = Encomenda.new
@@ -69,14 +74,8 @@ class EncomendasController < ApplicationController
       @encomenda = Encomenda.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def encomenda_params
-      params.require(:encomenda).permit(
-        :cliente_id,
-        :descricao,
-        :data_prevista,
-        :status,
-        itens_attributes: [:id, :produto_id, :quantidade, :_destroy]
-      )
+      params.require(:encomenda).permit(:cliente_id, :descricao, :data_prevista, :status, encomenda_produtos_attributes: [:produto_id, :quantidade])
     end
+
 end

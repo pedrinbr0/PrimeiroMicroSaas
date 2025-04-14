@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   get 'relatorios', to: 'relatorios#index'
   get 'produtos/buscar_por_codigo', to: 'produtos#buscar_por_codigo'
 
-  resources :encomendas
+  resources :encomendas do
+    get 'novo_produto_campo', on: :collection
+  end
+
   resources :compras
   resources :clientes
   resources :dividas

@@ -1,11 +1,11 @@
 <div class="row mb-2 produto-line">
   <div class="col-md-4">
-    <label>Código de Barras</label>
-    <%= text_field_tag "codigo_barra[]", "", class: "form-control codigo-barra" %>
+    <label for="">Código de Barras</label>
+    <input type="text" name="codigo_barra[]" class="form-control codigo-barra" />
   </div>
   <div class="col-md-4">
-    <label>Quantidade</label>
-    <%= number_field_tag "quantidade[]", 1, min: 1, class: "form-control quantidade" %>
+    <label for="">Quantidade</label>
+    <input type="number" name="quantidade[]" class="form-control quantidade" value="1" min="1" />
   </div>
   <div class="col-md-3">
     <label>Preço Unitário</label>
