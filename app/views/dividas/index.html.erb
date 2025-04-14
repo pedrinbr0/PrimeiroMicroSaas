@@ -9,6 +9,10 @@
     </div>
   <% end %>
 
+  <div class="text-end mb-5">
+    <%= link_to 'Nova Dívida', new_divida_path, class: "btn btn-success" %>
+  </div>
+
   <!-- Seção de Notificações -->
   <% if @dividas.any? { |d| d.status == 'pendente' && d.data_vencimento < Date.today } %>
     <div class="alert alert-danger text-center fw-bold">
@@ -51,10 +55,6 @@
         <% end %>
       </tbody>
     </table>
-  </div>
-
-  <div class="text-end mb-5">
-    <%= link_to 'Nova Dívida', new_divida_path, class: "btn btn-success" %>
   </div>
 
   <!-- Seção de Relatórios -->
