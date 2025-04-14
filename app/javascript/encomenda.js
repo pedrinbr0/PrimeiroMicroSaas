@@ -42,8 +42,21 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(html => {
           const container = document.getElementById("produtos-container");
           container.insertAdjacentHTML("beforeend", html);
+    
+          // Pega o último campo adicionado
+          const novaLinha = container.querySelector(".produto-line:last-child");
+          const codigoInput = novaLinha.querySelector(".codigo-barra");
+          const quantidadeInput = novaLinha.querySelector(".quantidade");
+    
+          if (codigoInput) {
+            codigoInput.addEventListener("input", () => buscarProdutoPorCodigo(codigoInput));
+          }
+    
+          if (quantidadeInput) {
+            quantidadeInput.addEventListener("input", () => atualizarTotal());
+          }
         });
-    });
+    });    
   
     document.addEventListener("input", (event) => {
       if (event.target.classList.contains("codigo-barra")) {
