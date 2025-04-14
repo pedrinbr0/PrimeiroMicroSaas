@@ -15,6 +15,10 @@
     </div>
   <% end %>
 
+  <div class="text-end mt-3">
+    <%= link_to "Nova Encomenda", new_encomenda_path, class: "btn btn-success" %>
+  </div>
+
   <div class="row">
     <% @encomendas.each do |encomenda| %>
       <div class="col-md-6 col-lg-4 mb-4">
@@ -28,10 +32,6 @@
         </div>
       </div>
     <% end %>
-  </div>
-
-  <div class="text-end mt-3">
-    <%= link_to "Nova Encomenda", new_encomenda_path, class: "btn btn-success" %>
   </div>
 
   <!-- Paginação -->
