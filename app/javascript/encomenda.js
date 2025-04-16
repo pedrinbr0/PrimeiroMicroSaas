@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
             quantidadeInput.addEventListener("input", () => atualizarTotal());
           }
         });
-    });    
+    });       
   
     document.addEventListener("input", (event) => {
       if (event.target.classList.contains("codigo-barra")) {
