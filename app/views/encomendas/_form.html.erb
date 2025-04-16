@@ -15,6 +15,21 @@
     <%= form.collection_select :cliente_id, Cliente.all, :id, :nome, prompt: "Selecione um cliente", class: "form-select" %>
   </div>
 
+  <div class="mb-3">
+   <%= form.label :descricao %>
+   <%= form.text_field :descricao, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+  <%= form.label :data_prevista %>
+  <%= form.date_field :data_prevista, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :status %>
+    <%= form.select :status, ['Aguardando', 'Em andamento', 'Concluída'], {}, class: "form-control" %>
+  </div>
+
   <hr>
 
   <h5>Produtos</h5>
