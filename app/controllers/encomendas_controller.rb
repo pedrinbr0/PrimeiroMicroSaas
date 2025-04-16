@@ -17,7 +17,7 @@ class EncomendasController < ApplicationController
 
   def novo_produto_campo
     @encomenda_produto = EncomendaProduto.new
-    render partial: 'produto_fields', locals: { f: ActionView::Helpers::FormBuilder.new(:encomenda_produtos, @encomenda_produto, self, {}) }
+    render partial: 'produto_fields', locals: { f: ActionView::Helpers::FormBuilder.new("encomenda[encomenda_produtos_attributes][]", @encomenda_produto, self, {}, Proc.new {}) }
   end
 
   # GET /encomendas/new
