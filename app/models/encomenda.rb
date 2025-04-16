@@ -1,5 +1,5 @@
 class Encomenda < ApplicationRecord
-  has_many :encomenda_produtos, dependent: :destroy
+  has_many :encomenda_produtos, inverse_of: :encomenda, dependent: :destroy
   has_many :produtos, through: :encomenda_produtos
 
   belongs_to :cliente
