@@ -1,16 +1,17 @@
 <div class="row mb-2 produto-line">
   <div class="col-md-4">
-    <label>Código de Barras</label>
-    <%= text_field_tag "codigo_barra[]", "", class: "form-control codigo-barra" %>
+    <%= f.label :codigo_barra, "Código de Barras" %>
+    <%= text_field_tag "codigo_barra[]", (f.object&.produto&.codigo_barra || ""), class: "form-control codigo-barra" %>
   </div>
-  <div class="col-md-4">
-    <label>Quantidade</label>
-    <%= number_field_tag "quantidade[]", 1, min: 1, class: "form-control quantidade" %>
+  <div class="col-md-2">
+    <%= f.label :quantidade %>
+    <%= f.number_field :quantidade, value: f.object.quantidade || 1, min: 1, class: "form-control quantidade" %>
   </div>
   <div class="col-md-3">
     <label>Preço Unitário</label>
     <span class="form-control preco-unitario">R$ 0,00</span>
   </div>
+  <%= f.hidden_field :produto_id %>
   <div class="col-md-1 d-flex align-items-end">
     <button type="button" class="btn btn-danger btn-sm remove-produto">X</button>
   </div>
