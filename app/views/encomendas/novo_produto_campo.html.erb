@@ -1,5 +1,5 @@
 <%= form_with(model: Encomenda.new, local: true) do |form| %>
-  <%= form.fields_for :encomenda_produtos, EncomendaProduto.new do |f| %>
+  <%= form.fields_for :encomenda_produtos, EncomendaProduto.new, child_index: Time.now.to_i do |f| %>
     <%= render 'produto_fields', f: f %>
   <% end %>
 <% end %>
