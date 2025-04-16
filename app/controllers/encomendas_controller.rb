@@ -16,7 +16,7 @@ class EncomendasController < ApplicationController
   end
 
   def novo_produto_campo
-    render 'novo_produto_campo', layout: false
+    render partial: 'produto_fields_static', layout: false
   end
 
   # GET /encomendas/new
