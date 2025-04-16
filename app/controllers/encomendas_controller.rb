@@ -75,7 +75,13 @@ class EncomendasController < ApplicationController
     end
 
     def encomenda_params
-      params.require(:encomenda).permit(:cliente_id, :descricao, :data_prevista, :status, encomenda_produtos_attributes: [:produto_id, :quantidade])
+      params.require(:encomenda).permit(
+        :cliente_id,
+        :descricao,
+        :data_prevista,
+        :status,
+        encomenda_produtos_attributes: [:id, :produto_id, :quantidade, :_destroy]
+      )
     end
 
 end
