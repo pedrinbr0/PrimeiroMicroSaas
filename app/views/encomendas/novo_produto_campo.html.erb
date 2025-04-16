@@ -1,0 +1,5 @@
+<%= form_with(model: Encomenda.new, local: true) do |form| %>
+  <%= form.fields_for :encomenda_produtos, EncomendaProduto.new do |f| %>
+    <%= render 'produto_fields', f: f %>
+  <% end %>
+<% end %>
