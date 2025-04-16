@@ -9,6 +9,16 @@
     </div>
   </div>
 
+  <h3>Produtos da Encomenda</h3>
+<% @encomenda.encomenda_produtos.each do |ep| %>
+  <p>
+    Produto: <strong><%= ep.produto.nome %></strong><br>
+    Quantidade: <%= ep.quantidade %><br>
+    Preço Unitário: R$ <%= number_with_precision(ep.produto.preco, precision: 2, separator: ",") %>
+  </p>
+<% end %>
+
+
   <div class="mt-3">
     <%= link_to "Editar", edit_encomenda_path(@encomenda), class: "btn btn-primary" %>
     <%= link_to "Voltar", encomendas_path, class: "btn btn-secondary" %>

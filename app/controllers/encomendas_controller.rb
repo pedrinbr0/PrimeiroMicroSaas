@@ -16,8 +16,7 @@ class EncomendasController < ApplicationController
   end
 
   def novo_produto_campo
-    @encomenda_produto = EncomendaProduto.new
-    render partial: 'produto_fields', locals: { f: ActionView::Helpers::FormBuilder.new(:encomenda_produtos, @encomenda_produto, self, {}) }
+    render partial: 'produto_fields_static', layout: false
   end
 
   # GET /encomendas/new
@@ -75,7 +74,13 @@ class EncomendasController < ApplicationController
     end
 
     def encomenda_params
-      params.require(:encomenda).permit(:cliente_id, :descricao, :data_prevista, :status, encomenda_produtos_attributes: [:produto_id, :quantidade])
+      params.require(:encomenda).permit(
+        :cliente_id,
+        :descricao,
+        :data_prevista,
+        :status,
+        encomenda_produtos_attributes: [:id, :produto_id, :quantidade, :_destroy]
+      )
     end
 
 end

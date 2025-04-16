@@ -17,38 +17,43 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("codigoBarra");
+  function buscarProdutoPorCodigo(input) {
+    const linha = input.closest('.produto-line');
+    const codigo = input.value;
 
-    input.addEventListener("change", () => {
-      const codigo = input.value;
+    fetch(`/produtos/buscar_por_codigo?codigo=${codigo}`)
+      .then(res => res.json())
+      .then(produto => {
+        if (produto && produto.id) {
+          linha.querySelector('.produto-id').value = produto.id;
+          linha.querySelector('.preco-unitario').textContent = `R$ ${parseFloat(produto.preco).toFixed(2).replace('.', ',')}`;
+          atualizarTotal();
+        } else {
+          linha.querySelector('.produto-id').value = '';
+          linha.querySelector('.preco-unitario').textContent = 'R$ 0,00';
+        }
+      });
+  }
 
-      if (!codigo) return;
+  function atualizarTotal() {
+    let total = 0;
 
-      fetch(`/produtos/buscar_por_codigo?codigo=${codigo}`)
-        .then(response => response.json())
-        .then(data => {
-          const container = document.getElementById("produto-info");
+    document.querySelectorAll('.produto-line').forEach(linha => {
+      const precoText = linha.querySelector('.preco-unitario').textContent.replace('R$ ', '').replace(',', '.');
+      const preco = parseFloat(precoText) || 0;
+      const quantidade = parseInt(linha.querySelector('.quantidade').value) || 1;
 
-          if (data.error) {
-            container.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
-          } else {
-            container.innerHTML = `
-              <div class="alert alert-success">
-                <strong>Produto:</strong> ${data.nome}<br>
-                <strong>Preço:</strong> R$ ${data.preco}
-              </div>
-            `;
+      const inputQtdOculta = linha.querySelector('.quantidade-oculta');
+      if (inputQtdOculta) {
+        inputQtdOculta.value = quantidade;
+      }
 
-            // Aqui você pode preencher automaticamente os campos ocultos
-            // ou criar inputs para salvar na encomenda
-          }
-
-          input.value = ""; // Limpa o campo para novo scan
-        })
-        .catch(() => {
-          alert("Erro ao buscar produto.");
-        });
+      total += preco * quantidade;
     });
-  });
+
+    const totalEl = document.getElementById('valor-total');
+    if (totalEl) {
+      totalEl.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    }
+  }
 </script>
