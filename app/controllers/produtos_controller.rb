@@ -57,9 +57,9 @@ class ProdutosController < ApplicationController
     end
   end
 
-  # GET /produtos/buscar_por_codigo?codigo_barra=123456
+  # GET /produtos/buscar_por_codigo?codigo=123456
   def buscar_por_codigo
-    codigo = params[:codigo_barra].to_s.strip.gsub("-", "")
+    codigo = params[:codigo].to_s.strip.gsub("-", "")
     produto = Produto.where("REPLACE(codigo_barra, '-', '') = ?", codigo).first
 
     if produto
