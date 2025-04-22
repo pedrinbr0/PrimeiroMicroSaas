@@ -14,26 +14,36 @@ document.addEventListener("DOMContentLoaded", () => {
       const codigo = input.value.trim();
       if (codigo.length === 0) return;
   
-      fetch(`/produtos/buscar_por_codigo?codigo_barra=${codigo}`)
-        .then(res => res.json())
-        .then(data => {
-          const linha = input.closest(".produto-line");
-          linha.querySelector(".preco-unitario").innerText = `R$ ${data.preco.toFixed(2).replace(".", ",")}`;
-  
-          // Criar ou atualizar o hidden_field de produto_id
-          let hidden = linha.querySelector("input[name*='[produto_id]']");
-          if (!hidden) {
-            hidden = document.createElement("input");
-            hidden.type = "hidden";
-            hidden.name = input.name.replace("codigo_barra[]", "encomenda_produtos_attributes[][produto_id]");
-            linha.appendChild(hidden);
-          }
-          hidden.value = data.id;
-  
-          atualizarTotal();
-        }).catch(() => {
-          alert("Produto não encontrado para o código informado.");
-        });
+      fetch(`/produtos/buscar_por_codigo?codigo=${codigo}`)
+       .then(res => {
+         if (!res.ok) {
+           throw new Error("Produto não encontrado");
+         }
+         return res.json();
+       })
+       .then(data => {
+        const linha = input.closest(".produto-line");
+      
+        linha.querySelector(".preco-unitario").innerText = `R$ ${parseFloat(data.preco).toFixed(2).replace(".", ",")}`;
+      
+        // Atualiza ou cria o campo hidden de produto_id
+        let hidden = linha.querySelector("input[name*='[produto_id]']");
+        if (!hidden) {
+          hidden = document.createElement("input");
+          hidden.type = "hidden";
+          
+          const index = Array.from(document.querySelectorAll(".produto-line")).indexOf(linha);
+          hidden.name = `encomenda[encomenda_produtos_attributes][${index}][produto_id]`;
+      
+          linha.appendChild(hidden);
+        }
+        hidden.value = data.id;
+      
+        atualizarTotal();
+      })      
+       .catch((error) => {
+         alert(error.message);
+       });
     }
   
     document.getElementById("add-produto").addEventListener("click", () => {
