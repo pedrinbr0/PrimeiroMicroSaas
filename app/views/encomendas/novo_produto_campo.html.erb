@@ -1,5 +1,16 @@
-<%= form_with(model: Encomenda.new, local: true) do |form| %>
-  <%= form.fields_for :encomenda_produtos, EncomendaProduto.new, child_index: Time.now.to_i do |f| %>
-    <%= render 'produto_fields', f: f %>
-  <% end %>
-<% end %>
+<div class="produto-line mb-3">
+  <%= f.hidden_field :produto_id, class: "produto-id" %>
+  <%= f.hidden_field :quantidade, value: 1, class: "quantidade-oculta" %>
+
+  <div class="row">
+    <div class="col">
+      <%= text_field_tag :codigo_barra, '', placeholder: 'Código de Barras', class: 'form-control codigo-barra', onblur: 'buscarProdutoPorCodigo(this)' %>
+    </div>
+    <div class="col">
+      <span class="preco-unitario">R$ 0,00</span>
+    </div>
+    <div class="col">
+      <%= number_field_tag :quantidade_display, 1, min: 1, class: 'form-control quantidade', onchange: 'atualizarTotal()' %>
+    </div>
+  </div>
+</div>

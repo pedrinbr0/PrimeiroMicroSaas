@@ -98,4 +98,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   atualizarTotal();
+
+  // Força sincronização das quantidades antes de enviar
+  document.querySelector("form").addEventListener("submit", (e) => {
+    document.querySelectorAll(".produto-line").forEach((linha) => {
+      const quantidadeInput = linha.querySelector(".quantidade");
+      const hiddenQtd = linha.querySelector(".quantidade-oculta");
+
+      if (quantidadeInput && hiddenQtd) {
+        hiddenQtd.value = quantidadeInput.value || 1;
+      }
+    });
+  });
 });
