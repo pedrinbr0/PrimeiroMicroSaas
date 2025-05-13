@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2025_04_22_202817) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "clientes", force: :cascade do |t|
     t.string "nome"
     t.string "telefone"
@@ -21,7 +24,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_22_202817) do
   end
 
   create_table "compras", force: :cascade do |t|
-    t.integer "cliente_id", null: false
+    t.bigint "cliente_id", null: false
     t.date "data"
     t.text "descricao"
     t.decimal "valor"
@@ -31,7 +34,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_22_202817) do
   end
 
   create_table "dividas", force: :cascade do |t|
-    t.integer "cliente_id", null: false
+    t.bigint "cliente_id", null: false
     t.decimal "valor"
     t.date "data_vencimento"
     t.string "status"
@@ -41,8 +44,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_22_202817) do
   end
 
   create_table "encomenda_produtos", force: :cascade do |t|
-    t.integer "encomenda_id", null: false
-    t.integer "produto_id", null: false
+    t.bigint "encomenda_id", null: false
+    t.bigint "produto_id", null: false
     t.integer "quantidade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,7 +54,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_22_202817) do
   end
 
   create_table "encomendas", force: :cascade do |t|
-    t.integer "cliente_id", null: false
+    t.bigint "cliente_id", null: false
     t.text "descricao"
     t.date "data_prevista"
     t.string "status"
