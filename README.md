@@ -1,24 +1,41 @@
-# README
+📦 Meu Primeiro Projeto SaaS
+Como o nome diz, esse é meu primeiro projeto real, que resolve um problema existente e já conseguiu ao menos um cliente. Inclusive, a ideia surgiu após esse cliente relatar as dificuldades que enfrentava no dia a dia, o que me motivou a criar essa aplicação.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+🛑 Qual era o problema?
+O cliente trabalha com vendas e realiza as entregas presencialmente. Para se organizar, ele utilizava uma combinação de WhatsApp, Excel e papel:
 
-Things you may want to cover:
+📄 O papel se desgasta facilmente e pode ser perdido.
 
-* Ruby version
+📊 O Excel funciona melhor, mas exige que ele role listas enormes, alterne cores para sinalizar dívidas e pagamentos, acompanhe encomendas, e volte nas conversas do WhatsApp para confirmar endereços e datas.
 
-* System dependencies
+Esse processo tomava tempo, era confuso e sujeito a erros.
 
-* Configuration
+✅ O que o projeto soluciona?
+A proposta foi reunir tudo isso em uma única aplicação web, simples de usar e acessível de qualquer lugar.
 
-* Database creation
+📌 Funcionalidades principais:
+Clientes: Armazena nome, endereço, telefone e e-mail. Conta com pesquisa por nome para facilitar buscas em listas grandes.
 
-* Database initialization
+Compras: Registra de quem foi comprado, a data, o preço e os produtos. Útil para gerar relatórios posteriormente.
 
-* How to run the test suite
+Relatórios: Permite consultar um período ou data específica para visualizar renda, produtos mais vendidos e datas de entrega de encomendas.
 
-* Services (job queues, cache servers, search engines, etc.)
+Dívidas: Controla nome, valor e data de vencimento. Ao vencer, a dívida aparece no dashboard e na aba de dívidas.
 
-* Deployment instructions
+Encomendas: Registra nome, data de entrega, status, código de barras e quantidade dos produtos. O preço final é calculado automaticamente.
 
-* ...
+📌 Obs.: O código de barras precisa estar previamente cadastrado na aba de produtos.
+
+Produtos: Cadastro único de produtos, com nome, preço e código de barras, usado nas encomendas.
+
+-------------------------------------------------------------------------------------------------------------
+
+🖥️ Como rodar o projeto?
+
+bundle install
+rails s
+No navegador, acesse: http://localhost:3000/
+
+🌐 Deploy
+O projeto está hospedado na Render, onde o cliente pode utilizar diariamente.
+Para manter a aplicação sempre ativa, utilizo também o UptimeRobot.
